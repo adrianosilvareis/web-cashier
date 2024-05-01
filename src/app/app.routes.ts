@@ -4,7 +4,7 @@ export const routes: Routes = [
   {
     path: '',
     loadComponent: () =>
-      import('./pages/auth/auth.component').then((m) => m.AuthComponent),
+      import('./pages/login/login.component').then((m) => m.LoginComponent),
   },
   {
     path: 'home',

@@ -22,5 +22,9 @@
       </div>
 
       <button pButton pRipple label="Sign In" icon="pi pi-user" class="w-full" (click)="login()" [disabled]="form.invalid"></button>
+
+      <div class="text-center mt-2" *ngIf="invalidLogin">
+        <span class="text-red-600 text-center">Login invalido</span>
+      </div>
   </form>
 </div>
