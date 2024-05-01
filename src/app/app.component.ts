@@ -5,8 +5,13 @@ import { RouterOutlet } from '@angular/router';
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  template: `
+    <div class="surface-ground h-screen w-full">
+      <div class="min-w-full px-5">
+        <router-outlet />
+      </div>
+    </div>
+  `,
 })
 export class AppComponent {
   title = 'frontend';
