@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { take } from 'rxjs';
 import { AuthService } from '../../services/auth/auth.service';
 import { PrimeModule } from '../../share/prime/prime.module';
 
@@ -8,7 +9,7 @@ import { PrimeModule } from '../../share/prime/prime.module';
   selector: 'app-login',
   standalone: true,
   imports: [PrimeModule, CommonModule],
-  templateUrl: './login.component.html'
+  templateUrl: './login.component.html',
 })
 export class LoginComponent {
   constructor(private auth: AuthService) {}
@@ -31,12 +32,23 @@ export class LoginComponent {
       rememberMe: boolean;
     };
 
-    this.auth.login(email, password, rememberMe).subscribe({
-      error: () => {
-        this.invalidLogin = true;
-        this.form.controls['email'].setErrors({ invalid: true });
-        this.form.controls['password'].setErrors({ invalid: true });
-      },
+    this.auth
+      .login(email, password, rememberMe)
+      .pipe(take(1))
+      .subscribe({
+        error: () => {
+          this.invalidLogin = true;
+          this.form.controls['email'].setErrors({ invalid: true });
+          this.form.controls['password'].setErrors({ invalid: true });
+          this.clearValidator();
+        },
+      });
+  }
+
+  private clearValidator() {
+    this.form.valueChanges.pipe(take(1)).subscribe(() => {
+      this.form.controls['email'].updateValueAndValidity();
+      this.form.controls['password'].updateValueAndValidity();
     });
   }
 }
