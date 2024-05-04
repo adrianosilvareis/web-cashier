@@ -6,13 +6,15 @@ import { EMPTY, of, throwError } from 'rxjs';
 import { AuthService } from '../../services/auth/auth.service';
 import { PrimeModule } from '../../share/prime/prime.module';
 import { LoginComponent } from './login.component';
+import { LoginService } from './services/login.service';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let el: DebugElement;
   let loginServiceSpy = jest.fn(() => of(EMPTY));
-  let service: AuthService;
+  let authAPI: AuthService;
+  let service: LoginService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -30,7 +32,8 @@ describe('LoginComponent', () => {
       .then(() => {
         fixture = TestBed.createComponent(LoginComponent);
         component = fixture.componentInstance;
-        service = TestBed.inject(AuthService);
+        authAPI = TestBed.inject(AuthService);
+        service = TestBed.inject(LoginService);
         el = fixture.debugElement;
       });
   });
@@ -40,7 +43,7 @@ describe('LoginComponent', () => {
   });
 
   it('should invalidate form if email is not provided or is not a valid email', () => {
-    const email = component.form.controls['email'];
+    const email = service.email;
     const inputEmail = el.query(By.css('#email')).nativeElement;
     const button = el.query(By.css("button[type='submit']")).nativeElement;
 
@@ -58,7 +61,7 @@ describe('LoginComponent', () => {
   });
 
   it('should invalidate form if password size is less then 6', () => {
-    const password = component.form.controls['password'];
+    const password = service.password;
     const passwordEmail = el.query(By.css('#password')).nativeElement;
     const button = el.query(By.css("button[type='submit']")).nativeElement;
 
@@ -79,8 +82,8 @@ describe('LoginComponent', () => {
   });
 
   it('should allow call login method if form is valid', () => {
-    const email = component.form.controls['email'];
-    const password = component.form.controls['password'];
+    const email = service.email;
+    const password = service.password;
     const button = el.query(By.css("button[type='submit']")).nativeElement;
 
     email.setValue('email@email.com');
@@ -99,10 +102,10 @@ describe('LoginComponent', () => {
   });
 
   it('should handle login failure', () => {
-    const email = component.form.controls['email'];
-    const password = component.form.controls['password'];
+    const email = service.email;
+    const password = service.password;
     const button = el.query(By.css("button[type='submit']")).nativeElement;
-    service.login = jest
+    authAPI.login = jest
       .fn()
       .mockImplementation(() => throwError(() => 'error'));
 
@@ -113,7 +116,7 @@ describe('LoginComponent', () => {
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       console.log('chegou');
-      expect(component.invalidLogin).toBeTruthy();
+      expect(service.invalidServer).toBeTruthy();
     });
   });
 
@@ -122,7 +125,7 @@ describe('LoginComponent', () => {
 
     expect(spanHided).toBeUndefined();
 
-    component.invalidLogin = true;
+    service.serverError = true;
     fixture.detectChanges();
 
     const spanMessage = el.query(By.css('#message'))?.nativeElement;

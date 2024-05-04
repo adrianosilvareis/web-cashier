@@ -6,7 +6,7 @@
       <a class="font-medium no-underline ml-2 text-blue-500 cursor-pointer">Create today!</a>
   </div>
 
-  <form [formGroup]="form">
+  <form [formGroup]="loginService.form">
       <label for="email" class="block text-900 font-medium mb-2">Email</label>
       <input id="email" type="text" placeholder="Email address" pInputText class="w-full mb-3" formControlName="email">
 
@@ -21,9 +21,9 @@
           <a class="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer">Forgot password?</a>
       </div>
 
-      <button type="submit" pButton pRipple label="Sign In" icon="pi pi-user" class="w-full" (click)="login()" [disabled]="form.invalid"></button>
+      <button type="submit" pButton pRipple label="Sign In" icon="pi pi-user" class="w-full" (click)="login()" [disabled]="loginService.invalid"></button>
 
-      <div class="text-center mt-2" *ngIf="invalidLogin">
+      <div class="text-center mt-2" *ngIf="loginService.invalidServer">
         <span id="message" class="text-red-600 text-center">Login invalido</span>
       </div>
   </form>
