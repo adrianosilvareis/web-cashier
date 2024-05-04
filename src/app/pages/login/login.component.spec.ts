@@ -6,7 +6,7 @@ import { EMPTY, of, throwError } from 'rxjs';
 import { AuthService } from '../../services/auth/auth.service';
 import { PrimeModule } from '../../share/prime/prime.module';
 import { LoginComponent } from './login.component';
-import { LoginService } from './services/login.service';
+import { FormLoginService } from './services/form-login.service';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -14,7 +14,7 @@ describe('LoginComponent', () => {
   let el: DebugElement;
   let loginServiceSpy = jest.fn(() => of(EMPTY));
   let authAPI: AuthService;
-  let service: LoginService;
+  let service: FormLoginService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -33,7 +33,7 @@ describe('LoginComponent', () => {
         fixture = TestBed.createComponent(LoginComponent);
         component = fixture.componentInstance;
         authAPI = TestBed.inject(AuthService);
-        service = TestBed.inject(LoginService);
+        service = TestBed.inject(FormLoginService);
         el = fixture.debugElement;
       });
   });

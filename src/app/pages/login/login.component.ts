@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { take } from 'rxjs';
 import { AuthService } from '../../services/auth/auth.service';
 import { PrimeModule } from '../../share/prime/prime.module';
-import { LoginService } from './services/login.service';
+import { FormLoginService } from './services/form-login.service';
 
 @Component({
   selector: 'app-login',
@@ -14,18 +14,18 @@ import { LoginService } from './services/login.service';
 export class LoginComponent {
   constructor(
     private authAPI: AuthService,
-    public loginService: LoginService
+    public formLogin: FormLoginService
   ) {}
 
   login() {
-    const { email, password, rememberMe } = this.loginService.payload;
+    const { email, password, rememberMe } = this.formLogin.payload;
 
     this.authAPI
       .login(email, password, rememberMe)
       .pipe(take(1))
       .subscribe({
         error: () => {
-          this.loginService.serverError = true;
+          this.formLogin.serverError = true;
         },
       });
   }

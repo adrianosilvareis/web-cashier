@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { LoginService } from './login.service';
+import { FormLoginService } from './form-login.service';
 
 describe('LoginService', () => {
-  let service: LoginService;
+  let service: FormLoginService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(LoginService);
+    service = TestBed.inject(FormLoginService);
   });
 
   it('should be created', () => {
@@ -16,11 +16,11 @@ describe('LoginService', () => {
 });
 
 describe('LoginService', () => {
-  let service: LoginService;
+  let service: FormLoginService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(LoginService);
+    service = TestBed.inject(FormLoginService);
   });
 
   it('should be created', () => {

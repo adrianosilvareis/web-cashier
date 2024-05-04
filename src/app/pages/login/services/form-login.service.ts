@@ -5,7 +5,7 @@ import { take } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class LoginService {
+export class FormLoginService {
   constructor(private readonly builder: FormBuilder) {}
 
   private _serverInvalid = false;
