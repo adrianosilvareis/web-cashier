@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, catchError, map, throwError } from 'rxjs';
-import { LocalStorageService } from '../storage/local-storage.service';
+import { LocalStorageService } from '../../../../services/storage/local-storage.service';
 
 export interface LoginResponse {
   token: string;

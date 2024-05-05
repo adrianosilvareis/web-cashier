@@ -2,7 +2,7 @@
   <div class="text-center mb-5">
       <div class="text-900 text-3xl font-medium mb-3">Welcome Back</div>
       <span class="text-600 font-medium line-height-3">Don't have an account?</span>
-      <a class="font-medium no-underline ml-2 text-blue-500 cursor-pointer">Create today!</a>
+      <a class="font-medium no-underline ml-2 text-blue-500 cursor-pointer" routerLink="register">Create today!</a>
   </div>
 
   <form [formGroup]="formLogin.form">
@@ -20,10 +20,12 @@
           <a class="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer">Forgot password?</a>
       </div>
 
+      <p-divider layout="horizontal" [align]="'center'"></p-divider>
+
       <button type="submit" pButton pRipple label="Sign In" icon="pi pi-user" class="w-full" (click)="login()" [disabled]="formLogin.invalid"></button>
 
       <div class="text-center mt-2" *ngIf="formLogin.invalidServer">
-        <span id="message" class="text-red-600 text-center">Login invalido</span>
+        <span id="message" class="text-red-600 text-center">Invalid data</span>
       </div>
   </form>
 </div>

@@ -1,12 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormBuilder } from '@angular/forms';
 import { By } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
 import { EMPTY, of, throwError } from 'rxjs';
-import { AuthService } from '../../services/auth/auth.service';
 import { PrimeModule } from '../../share/prime/prime.module';
+import { HomeComponent } from '../home/home.component';
+import { RegisterComponent } from '../register/register.component';
+import { AuthService } from '../register/services/auth/auth.service';
 import { LoginComponent } from './login.component';
-import { FormLoginService } from './services/form-login.service';
+import { FormLoginService } from './services/form/form-login.service';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -18,7 +22,16 @@ describe('LoginComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [LoginComponent, PrimeModule, CommonModule],
+      imports: [
+        LoginComponent,
+        PrimeModule,
+        CommonModule,
+        RouterModule.forRoot([
+          { path: '', component: LoginComponent },
+          { path: 'register', component: RegisterComponent },
+          { path: 'home', component: HomeComponent },
+        ]),
+      ],
       providers: [
         {
           provide: AuthService,
@@ -26,19 +39,18 @@ describe('LoginComponent', () => {
             login: loginServiceSpy,
           },
         },
+        FormLoginService,
+        FormBuilder,
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(LoginComponent);
-        component = fixture.componentInstance;
-        authAPI = TestBed.inject(AuthService);
-        service = TestBed.inject(FormLoginService);
-        el = fixture.debugElement;
-      });
+    }).compileComponents();
   });
 
   beforeEach(() => {
+    fixture = TestBed.createComponent(LoginComponent);
+    component = fixture.componentInstance;
+    authAPI = TestBed.inject(AuthService);
+    service = TestBed.inject(FormLoginService);
+    el = fixture.debugElement;
     fixture.detectChanges();
   });
 
@@ -130,6 +142,6 @@ describe('LoginComponent', () => {
 
     const spanMessage = el.query(By.css('#message'))?.nativeElement;
 
-    expect(spanMessage.textContent).toBe('Login invalido');
+    expect(spanMessage.textContent).toBe('Invalid data');
   });
 });

@@ -1,14 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { take } from 'rxjs';
-import { AuthService } from '../../services/auth/auth.service';
 import { PrimeModule } from '../../share/prime/prime.module';
-import { FormLoginService } from './services/form-login.service';
+import { AuthService } from '../register/services/auth/auth.service';
+import { FormLoginService } from './services/form/form-login.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [PrimeModule, CommonModule],
+  imports: [PrimeModule, CommonModule, RouterModule],
   templateUrl: './login.component.html',
 })
 export class LoginComponent {

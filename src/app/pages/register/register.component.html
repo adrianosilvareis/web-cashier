@@ -1,0 +1,39 @@
+<div class="surface-card p-4 shadow-2 border-round mx-auto max-w-500">
+  <div class="text-center mb-5">
+      <div class="text-900 text-3xl font-medium mb-3">Welcome Back</div>
+      <span class="text-600 font-medium line-height-3">I have an account</span>
+      <a class="font-medium no-underline ml-2 text-blue-500 cursor-pointer" routerLink="">Go to Login!</a>
+  </div>
+
+  <form [formGroup]="registerForm.form">
+    <div class="flex flex-column mt-3">
+      <label for="name" class="block text-900 font-medium mb-2">Name</label>
+      <input id="name" type="text" placeholder="Full Name" pInputText aria-describedby="name-help" formControlName="name">
+      <small id="name-help" *ngIf="registerForm.name.invalid && registerForm.name.dirty">Required</small>
+    </div>
+
+    <div class="flex flex-column mt-3">
+      <label for="email" class="block text-900 font-medium mb-2">Email</label>
+      <input id="email" type="text" placeholder="Email address" pInputText aria-describedby="email-help"  formControlName="email">
+      <small id="name-help" *ngIf="registerForm.email.getError('required') && registerForm.email.dirty">Required.</small>
+      <small id="name-help" *ngIf="registerForm.email.getError('email') && registerForm.email.dirty">Must be an email.</small>
+    </div>
+
+    <div class="flex flex-column mt-3">
+      <label for="password" class="block text-900 font-medium mb-2">Password</label>
+      <input id="password" type="password" placeholder="Password" pInputText aria-describedby="password-help"  formControlName="password">
+      <small id="name-help" *ngIf="registerForm.password.getError('required') && registerForm.password.dirty">Required.</small>
+      <small id="name-help" *ngIf="registerForm.password.getError('minlength') && registerForm.password.dirty">
+        Min Length 6, current {{ registerForm.password.getError('minlength').actualLength }}.
+      </small>
+    </div>
+
+    <p-divider layout="horizontal" [align]="'center'"></p-divider>
+
+    <button type="submit" pButton pRipple label="Sign Up" icon="pi pi-user" class="w-full" (click)="save()" [disabled]="registerForm.invalid"></button>
+
+    <div class="text-center mt-2" *ngIf="registerForm.invalidServer">
+      <span id="message" class="text-red-600 text-center">Invalid data</span>
+    </div>
+  </form>
+</div>
