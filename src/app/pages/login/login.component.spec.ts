@@ -8,8 +8,8 @@ import { EMPTY, of, throwError } from 'rxjs';
 import { PrimeModule } from '../../share/prime/prime.module';
 import { HomeComponent } from '../home/home.component';
 import { RegisterComponent } from '../register/register.component';
-import { AuthService } from '../register/services/auth/auth.service';
 import { LoginComponent } from './login.component';
+import { AuthService } from './services/auth/auth.service';
 import { FormLoginService } from './services/form/form-login.service';
 
 describe('LoginComponent', () => {
@@ -127,7 +127,6 @@ describe('LoginComponent', () => {
 
     fixture.detectChanges();
     fixture.whenStable().then(() => {
-      console.log('chegou');
       expect(service.invalidServer).toBeTruthy();
     });
   });

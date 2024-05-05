@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { take } from 'rxjs';
 import { PrimeModule } from '../../share/prime/prime.module';
-import { AuthService } from '../register/services/auth/auth.service';
+import { AuthService } from './services/auth/auth.service';
 import { FormLoginService } from './services/form/form-login.service';
 
 @Component({
@@ -25,6 +25,9 @@ export class LoginComponent {
       .login(email, password, rememberMe)
       .pipe(take(1))
       .subscribe({
+        next: () => {
+          this.formLogin.form.reset();
+        },
         error: () => {
           this.formLogin.serverError = true;
         },
